@@ -1,12 +1,18 @@
 package main
 
-func partOneHandler(fileName string) (int, int, error) {
+import "fmt"
+
+func partOneHandler(fileName string) error {
 	q, err := getQuizFromCsv(fileName)
 	if err != nil {
-		return 0, 0, err
+		return err
 	}
 
-	total := len(q)
-	score := getQuizResult(q)
-	return total, score, nil
+	//score := make(map[string]int)
+	var zero int
+	var score *int
+	score = &zero
+	startQuiz(q, score)
+	fmt.Printf("You scored %d out of %d\n", *score, len(q))
+	return nil
 }

@@ -2,19 +2,29 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 )
 
 func main() {
-	partNo := *flag.Int("part", 1, "specifies which part of this lesson should run")
-	fileName := *flag.String("csv", "problems.csv", "csv file name to read")
+	part := flag.Int("part", 1, "specifies which part of this lesson should run")
+	fileName := flag.String("csv", "problems.csv", "csv file name to read")
+	t := flag.Int("time", 30, "set time limit in seconds for quiz")
+	flag.Parse()
 
-	var total, score int
 	var err error
-	switch partNo {
+	switch *part {
 	case 1:
-		total, score, err = partOneHandler(fileName)
+		err = partOneHandler(*fileName)
+	case 2:
+		// max time limit
+		if *t > 3600 {
+			*t = 3600
+		}
+		// for negative value, reset to default
+		if *t < 1 {
+			*t = 30
+		}
+		err = partTwoHandler(*fileName, *t)
 	default:
 		log.Fatalln("invalid part no for lesson 1")
 	}
@@ -22,6 +32,4 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	fmt.Printf("You scored %d out of %d\n", score, total)
 }

@@ -42,16 +42,31 @@ func getQuizFromCsv(name string) ([]Quiz, error) {
 	}
 }
 
-func getQuizResult(qz []Quiz) int {
-	var score, ans int
+func displayQuestion(qNo int, q string) {
+	fmt.Printf("Question #%d: %s = ", qNo, q)
+}
 
+func isAnsCorrect(ans int) bool {
+	var tmpAns int
+	_, err := fmt.Scanf("%d\n", &tmpAns)
+	return err == nil && tmpAns == ans
+}
+
+func startQuiz(qz []Quiz, score *int) {
 	for i, q := range qz {
-		fmt.Printf("Question #%d: %s = ", i+1, q.Ques)
-
-		_, err := fmt.Scanf("%d\n", &ans)
-		if err == nil && ans == q.Ans {
-			score++
+		displayQuestion(i+1, q.Ques)
+		if isAnsCorrect(q.Ans) {
+			*score++
 		}
 	}
-	return score
+}
+
+func startQuiz2(qz []Quiz, score *int, done chan<- bool) {
+	for i, q := range qz {
+		displayQuestion(i+1, q.Ques)
+		if isAnsCorrect(q.Ans) {
+			*score++
+		}
+	}
+	done <- true
 }
