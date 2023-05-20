@@ -1,14 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func partOneHandler(fileName string) error {
+func partOneHandler(fileName string, shuffle bool) error {
 	q, err := getQuizFromCsv(fileName)
 	if err != nil {
 		return err
 	}
 
-	//score := make(map[string]int)
+	if shuffle {
+		shuffleQuiz(q)
+	}
+
 	var zero int
 	var score *int
 	score = &zero

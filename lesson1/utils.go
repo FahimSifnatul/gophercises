@@ -4,8 +4,10 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"math/rand"
 	"os"
 	"strconv"
+	"time"
 )
 
 func getQuizFromCsv(name string) ([]Quiz, error) {
@@ -40,6 +42,13 @@ func getQuizFromCsv(name string) ([]Quiz, error) {
 		}
 		results = append(results, res)
 	}
+}
+
+func shuffleQuiz(q []Quiz) {
+	rand.Seed(time.Now().Unix())
+	rand.Shuffle(len(q), func(i, j int) {
+		q[i], q[j] = q[j], q[i]
+	})
 }
 
 func displayQuestion(qNo int, q string) {

@@ -5,10 +5,14 @@ import (
 	"time"
 )
 
-func partTwoHandler(fileName string, t int) error {
+func partTwoHandler(fileName string, t int, shuffle bool) error {
 	q, err := getQuizFromCsv(fileName)
 	if err != nil {
 		return err
+	}
+
+	if shuffle {
+		shuffleQuiz(q)
 	}
 
 	done := make(chan bool)
