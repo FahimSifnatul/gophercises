@@ -1,0 +1,6 @@
+- path: "cat-fact"
+  url: "https://catfact.ninja/fact"
+- path: "suggestion"
+  url: "https://www.boredapi.com/api/activity"
+- path: "joke"
+  url: "https://official-joke-api.appspot.com/random_joke"
